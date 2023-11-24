@@ -58,7 +58,65 @@ CarRental::CarRental()
 
 void CarRental::rentCar()
 {
+        showInventory(); // Display the inventory
 
+    string brandToRent;
+    cout << "Enter the brand of the car you want to rent: ";
+    cin >> brandToRent;
+
+    ifstream inFile(fileName);
+    ofstream outFile("temp.txt");
+
+    if (inFile.is_open() && outFile.is_open())
+    {
+        string brand, model, lastRented, rentalLength, price, available;
+
+        while (inFile >> brand >> model >> lastRented >> rentalLength >> price >> available)
+        {
+            if (brand == brandToRent)
+            {
+                if (available == "1")
+                {
+                    // Car is available for rent
+                    cout << "Car rented successfully!\n";
+
+                    // Update availability to "0" (not available)
+                    outFile << brand << " " << model << " " << lastRented << " " << rentalLength << " "
+                            << price << " " << "0" << "\n";
+                }
+                else
+                {
+                    // Car is not available for rent
+                    cout << "Car is not available for rent.\n";
+                    outFile << brand << " " << model << " " << lastRented << " " << rentalLength << " "
+                            << price << " " << available << "\n";
+                }
+            }
+            else
+            {
+                // Write unchanged data to temp file
+                outFile << brand << " " << model << " " << lastRented << " " << rentalLength << " "
+                        << price << " " << available << "\n";
+            }
+        }
+
+        inFile.close();
+        outFile.close();
+
+        // Rename temp file to the original file
+        if (remove(fileName.c_str()) == 0 && rename("temp.txt", fileName.c_str()) == 0)
+        {
+            cout << "File updated successfully!\n";
+        }
+        else
+        {
+            cout << "Error updating file.\n";
+        }
+    }
+    else
+    {
+        cout << "Error: Unable to open the file.\n";
+    }
 }//rentCar
 
 void CarRental::returnCar()
@@ -97,7 +155,7 @@ void CarRental::addCar()
 
         if (myFile.is_open()) {
             myFile << getBrand() << " " << getModel() << " " << getLastRented() << " "
-               << getRentalLength() << " " << getPrice() << " " << isAvailable() << "\n";
+               << getRentalLength() << " " << getPrice() << " " << "yes" << "\n";
 
             myFile.close();
         } else {
@@ -121,6 +179,19 @@ void CarRental::showInventory()
     myFile.open(getFileName());
     if (myFile.is_open()) 
     {
+        cout << "Inventory:\n";
+
+        // Read and display each line from the file
+        string brand, model, lastRented, rentalLength, price, available;
+        while (myFile >> brand >> model >> lastRented >> rentalLength >> price >> available)
+        {
+            cout << "Brand: " << brand << "\n"
+                 << "Model: " << model << "\n"
+                 << "Last Rented: " << lastRented << "\n"
+                 << "Rental Length: " << rentalLength << "\n"
+                 << "Price: " << price << "\n"
+                 << "Available: " << available << "\n\n";
+        }
         myFile.close();
     } 
     else 
@@ -167,61 +238,59 @@ int main()
         cout << "ERROR: Can't open " << fileNameInput << endl;
     }//LOOP UNTIL RIGHT DATA
 
-        string input = "";
-        do
+    string input = "";
+    do
+    {
+        cout << "(1) Customer\n(2) Admin\n";
+        cin >> input;
+        if((input != "1") && (input != "2"))
         {
-            cout << "(1) Customer\n(2) Admin\n";
-            cin >> input;
-            if((input != "1") && (input != "2"))
-            {
-                cout << "Invalid input. Please enter '1' or '2'.\n";
-            }
-        } while(input != "1" && input != "2");
-
-        system("cls");
-        cout << "Logged in as: " << (input == "1" ? "Customer" : "Admin") << endl;
+            cout << "Invalid input. Please enter '1' or '2'.\n";
+        }
+    } while(input != "1" && input != "2");
         
-        string menu[] = {"Rent a Car", "Return a Car", "Show Inventory", "Add Car to System", "Remove Car from System"};
-        
-        input = "";
-        do
+    system("cls");
+    cout << "Logged in as: " << (input == "1" ? "Customer" : "Admin") << endl;
+    
+    string menu[] = {"Rent a Car", "Return a Car", "Show Inventory", "Add Car to System", "Remove Car from System"};
+    
+    input = "";
+    do
+    {
+        for(int i = 0; i < size(menu); i++)
         {
-            for(int i = 0; i < size(menu); i++)
-            {
-                cout << "(" << i + 1 << ") " << menu[i] << endl;
-            }
-            cin >> input;
-            if((input != "1") && (input != "2") && (input != "3") && (input != "4") && (input != "5"))
-            {
-                cout << "Invalid input. Please enter '1', '2', '3', '4', '5'.\n";
-            }
-        } while(input != "1" && input != "2" && input != "3" && input != "4" && input != "5");
+            cout << "(" << i + 1 << ") " << menu[i] << endl;
+        }
+        cin >> input;
+        if((input != "1") && (input != "2") && (input != "3") && (input != "4") && (input != "5"))
+        {
+            cout << "Invalid input. Please enter '1', '2', '3', '4', '5'.\n";
+        }
+    } while(input != "1" && input != "2" && input != "3" && input != "4" && input != "5");
 
-        int choice = stoi(input); // Convert string to integer
-        switch(choice)
-        {
-            case 1:
-                CR.rentCar();
-                break;
+    int choice = stoi(input); // Convert string to integer
+    switch(choice)
+    {
+        case 1:
+            CR.rentCar();
+            break;
+        
+        case 2:
+            CR.returnCar();
+            break;
+
+        case 3:
+            CR.showInventory();
+            break;
             
-            case 2:
-                CR.returnCar();
-                break;
-
-            case 3:
-                CR.showInventory();
-                break;
-                
-            case 4:
-                CR.addCar();
-                break;
-
-            case 5:
-                CR.removeCar();
-                break;    
-
-            default:
-                cout << "ERROR" << endl;
-        };
+        case 4:
+            CR.addCar();
+            break;
+        case 5:
+            CR.removeCar();
+            break;    
+        default:
+            cout << "ERROR" << endl;
+    };
     return 0;
 }//main
