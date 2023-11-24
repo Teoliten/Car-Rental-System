@@ -1,0 +1,4 @@
+brand model lastRented rentalLength price available
+BMW M4_Competition 19/09/23 7_days 1000 1 Mercedes AMG_GT null null 500 null
+Toyota Prius null null 30 null
+Ferrari F40 null null 2090 null
