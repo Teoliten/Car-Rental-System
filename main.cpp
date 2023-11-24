@@ -3,7 +3,6 @@
 #include <string>
 #include <iterator> //size()
 #include <cstdlib> // for system function
-// #include <vector>
 
 using namespace std;
 
@@ -60,9 +59,9 @@ void CarRental::rentCar()
 {
     showInventory(); // Display the inventory
 
-    string brandToRent;
-    cout << "Enter the brand of the car you want to rent: ";
-    cin >> brandToRent;
+    string modelToRent;
+    cout << "Enter the MODEL of the car you want to rent: ";
+    cin >> modelToRent;
 
     ifstream inFile(getFileName());
     ofstream outFile("temp.txt");
@@ -73,10 +72,14 @@ void CarRental::rentCar()
 
         while (inFile >> brand >> model >> lastRented >> rentalLength >> price >> available)
         {
-            if (brand == brandToRent)
+            if (model == modelToRent)
             {
                 if (available == "yes")
                 {
+                    cout << "Rent our " << model << " for how many days: ";
+                    string days;
+                    cin >> days;
+                    cout << "\nTotal cost for renting our " << model << " for " << days << " days: $" << (stoi(price)) * (stoi(days)) << "." << endl;
                     // Car is available for rent
                     cout << "Car rented successfully!\n";
 
