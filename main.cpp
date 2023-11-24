@@ -58,13 +58,13 @@ CarRental::CarRental()
 
 void CarRental::rentCar()
 {
-        showInventory(); // Display the inventory
+    showInventory(); // Display the inventory
 
     string brandToRent;
     cout << "Enter the brand of the car you want to rent: ";
     cin >> brandToRent;
 
-    ifstream inFile(fileName);
+    ifstream inFile(getFileName());
     ofstream outFile("temp.txt");
 
     if (inFile.is_open() && outFile.is_open())
@@ -75,14 +75,14 @@ void CarRental::rentCar()
         {
             if (brand == brandToRent)
             {
-                if (available == "1")
+                if (available == "yes")
                 {
                     // Car is available for rent
                     cout << "Car rented successfully!\n";
 
                     // Update availability to "0" (not available)
                     outFile << brand << " " << model << " " << lastRented << " " << rentalLength << " "
-                            << price << " " << "0" << "\n";
+                            << price << " " << "no" << "\n";
                 }
                 else
                 {

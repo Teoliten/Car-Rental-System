@@ -1,6 +1,6 @@
-BMW M4_Competition 19/09/23 7_days 1000 0
-Mercedes AMG_GT null null 500 null
-Toyota Prius null null 30 null
-Ferrari F40 null null 2090 null
+BMW M4_Competition 19/09/23 7 1000 yes
+Mercedes AMG_GT null null 500 yes
+Toyota Prius null null 30 yes
+Ferrari F40 19/11/23 11 2090 no
 Volkswagen Passat null null 250 yes
 Toyota Supra null null 1100 yes
