@@ -1,2 +1,0 @@
-issue
--showing wrong model and name after returning, not updating inventory
