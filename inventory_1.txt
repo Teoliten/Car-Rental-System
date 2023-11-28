@@ -1,7 +1,7 @@
 Ferrari 488_GTB 28/11/23 10 1500 yes
 Lamborghini Huracan 28/11/23 2 2000 yes
-Bugatti Veyron 25/11/23 10 5000 yes
-McLaren P1 25/11/23 2 2500 yes
-Porsche 911 28/11/23 24 1000 yes
+Bugatti Veyron 28/11/23 2 5000 no
+McLaren P1 28/11/23 5 2500 no
+Porsche 911 28/11/23 4 1000 no
 Aston_Martin DBS_Superleggera 27/11/23 47 1800 yes
-Skoda Octavia 28/11/23 2 50 yes
+Skoda Octavia 28/11/23 4 50 no
